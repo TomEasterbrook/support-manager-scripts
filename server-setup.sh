@@ -81,17 +81,16 @@ function install_app() {
       if [ -d ~/cache ]; then
           cp -r ~/cache/vendor /var/www/"$domain"/vendor
           cp -r ~/cache/node_modules /var/www/"$domain"/node_modules
-          else
-            echo "No cache of vendor and node_modules found - installing from scratch"
-            composer install --no-scripts
-            npm config set "@fortawesome:registry" https://npm.fontawesome.com/
-            npm config set '//npm.fontawesome.com/:_authToken' "$fontAwesomeToken"
-            npm install
-            mkdir ~/cache
-            cp -r /var/www/"$domain"/vendor ~/cache/vendor
-            cp -r /var/www/"$domain"/node_modules ~/cache/node_modules
-            echo "Cache of dependencies created"
-      fi
+          fi
+        composer install --no-scripts
+        npm config set "@fortawesome:registry" https://npm.fontawesome.com/
+        npm config set '//npm.fontawesome.com/:_authToken' "$fontAwesomeToken"
+        npm install
+        mkdir ~/cache
+        cp -r /var/www/"$domain"/vendor ~/cache/vendor
+        cp -r /var/www/"$domain"/node_modules ~/cache/node_modules
+        echo "Cache of dependencies created"
+
 
       npm run build
       composer dump-autoload -o
