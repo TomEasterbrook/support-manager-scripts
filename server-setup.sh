@@ -69,6 +69,7 @@ setup_ufu
 echo_section_header "Cloning SupportManager"
 cd /var/www || exit
 git clone git@github.com:TomEasterbrook/support-manager-web.git
+cd support-manager-web || exit
 git checkout develop
 cd ~ || exit
 
