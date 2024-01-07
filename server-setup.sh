@@ -37,35 +37,67 @@ function install_packages() {
     sudo add-apt-repository ppa:ondrej/php -y
     sudo apt update
 
-    echo_section_header "Installing PHP"
-    sudo apt install php8.3 php8.3-cli php8.3-{bz2,curl,fpm,mbstring,mysql,redis,intl,xml,zip} -y
+
+    if ! [ -f /etc/php/8.3/fpm/php.ini ]; then
+        echo_section_header "Installing PHP"
+        sudo apt install php7.4 php7.4-fpm php7.4-mysql php7.4-redis php7.4-mbstring php7.4-xml php7.4-curl php7.4-zip php7.4-gd php7.4-bcmath php7.4-intl php7.4-imagick -y
+        else
+        echo_section_header "PHP already installed"
+    fi
 
     echo_section_header "Installing Composer"
     if ! [ -f /usr/local/bin/composer ]; then
         curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+        else
+        echo_section_header "Composer already installed"
     fi
 
-    echo_section_header "Installing NodeJS"
     if ! [ -f /usr/bin/node ]; then
+        echo_section_header "Installing NodeJS"
         sudo apt install nodejs npm -y
         npm install -g n
         sudo n stable
+        else
+        echo_section_header "NodeJS already installed"
     fi
 
     echo_section_header "Installing Supervisor"
-    sudo apt install supervisor -y
+    if [ `command -v "supervisorctl"` ]; then
+        echo_section_header "Supervisor already installed"
+        else
+        echo_section_header "Installing Supervisor"
+        sudo apt install supervisor -y
+    fi
 
-    echo_section_header "Installing Nginx"
-    sudo apt install nginx -y
+    if [ `command -v "nginx"` ]; then
+        echo_section_header "Nginx already installed"
+        else
+        echo_section_header "Installing Nginx"
+        sudo apt install nginx -y
 
-    echo_section_header "Installing Certbot"
-    sudo apt install certbot python3-certbot-nginx -y
+    fi
 
-    echo_section_header "Installing MySQL"
-    sudo apt install mysql-server -y
+    if [ `command -v "certbot"` ]; then
+        echo_section_header "Certbot already installed"
+        else
+        echo_section_header "Installing Certbot"
+        sudo apt install certbot python3-certbot-nginx -y
+    fi
+
+    if [ `command -v "mysql"` ]; then
+        echo_section_header "MySQL already installed"
+        else
+        echo_section_header "Installing MySQL"
+        sudo apt install mysql-server -y
+    fi
 
     echo_section_header "Installing Redis"
-    sudo apt install redis-server -y
+    if [ `command -v "redis-server"` ]; then
+        echo_section_header "Redis already installed"
+        else
+        echo_section_header "Installing Redis"
+        sudo apt install redis-server -y
+    fi
 }
 function clone_repo() {
   echo_section_header "Cloning SupportManager"
