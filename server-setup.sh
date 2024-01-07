@@ -86,13 +86,14 @@ function install_app() {
         npm config set "@fortawesome:registry" https://npm.fontawesome.com/
         npm config set '//npm.fontawesome.com/:_authToken' "$fontAwesomeToken"
         npm install
-        mkdir ~/cache
+        npm run build
+        mkdir -p ~/cache
         cp -r /var/www/"$domain"/vendor ~/cache/vendor
         cp -r /var/www/"$domain"/node_modules ~/cache/node_modules
         echo "Cache of dependencies created"
 
 
-      npm run build
+
       composer dump-autoload -o
       cd ~ || exit
 }
