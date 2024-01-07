@@ -106,7 +106,7 @@ This script will install all the required dependencies for the SupportManager to
 
 read -p "Press enter to continue"
 
-get_env_data
+get_data
 install_packages
 configure_git
 
