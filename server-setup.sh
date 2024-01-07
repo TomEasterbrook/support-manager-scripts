@@ -20,6 +20,26 @@ function configure_git() {
           github.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=
           github.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCj7ndNxQowgcQnjshcLrqPEiiphnt+VTTvDP6mHBL9j1aNUkY4Ue1gvwnGLVlOhGeYrnZaMgRK6+PKCUXaDbC7qtbW8gIkhL7aGCsOr/C56SJMy/BCZfxd1nWzAOxSDPgVsmerOBYfNqltV9/hWCqBywINIR+5dIg6JTJ72pcEpEjcYgXkE2YEFXV1JHnsKgbLWNlhScqb2UmyRkQyytRLtL+38TGxkxCflmO+5Z8CSSNY7GidjMIZ7Q4zMjA2n1nGrlTDkzwDCsw+wqFPGQA179cnfGWOWRVruj16z6XyvxvjJwbz0wQZ75XK5tKSb7FNyeIEs4TT4jk+S4dhPeAUC5y+bDYirYgM4GC7uEnztnZyaVWQ7B381AK4Qdrwt51ZqExKbQpTUNn+EjqoTwvqNj4kqx5QUCI0ThS/YkOxJCXmPUWZbhjpCg56i+2aB6CmK2JGhn57K5mj0MNdBXA4/WnwH6XoPWJzK5Nyu2zB3nAZp+S5hpQs+p1vN1/wsjk=" >> ~/.ssh/known_hosts
 }
+function getEnvData() {
+    echo 'First we need to get some information about your environment'
+    read -p 'What is your domain name? (e.g. example.com): ' domain
+    read -p 'Please enter a FontAwesome Pro token: ' fontAwesomeToken
+
+}
+function clone_repo() {
+  echo_section_header "Cloning SupportManager"
+  cd /var/www || exit
+  git clone git@github.com:TomEasterbrook/support-manager-web.git "$domain"
+  cd support-manager-web || exit
+  git checkout develop
+  composer install --no-scripts
+  npm config set "@fortawesome:registry" https://npm.fontawesome.com/
+  npm config set '//npm.fontawesome.com/:_authToken' "$fontAwesomeToken"
+  npm install
+  npm run build
+  composer dump-autoload -o
+  cd ~ || exit
+}
 
 echo_section_header "Welcome to the SupportManager server setup script"
 
@@ -65,12 +85,7 @@ sudo apt install redis-server -y
 
 echo_section_header "Configuring UFW"
 setup_ufu
+clone_repo
 
-echo_section_header "Cloning SupportManager"
-cd /var/www || exit
-git clone git@github.com:TomEasterbrook/support-manager-web.git
-cd support-manager-web || exit
-git checkout develop
-cd ~ || exit
 
 
