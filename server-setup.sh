@@ -97,10 +97,8 @@ function install_app() {
       composer dump-autoload -o
       cd ~ || exit
 }
-
+cd ~ || exit
 echo_section_header "Welcome to the SupportManager server setup script"
-
-
 echo "Welcome to the SupportManager the server setup script
 This script will install all the required dependencies for the SupportManager to run"
 
