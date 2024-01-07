@@ -8,11 +8,26 @@ function echo_section_header() {
 }
 
 
+function setup_ufu() {
+    sudo ufw allow 'Nginx Full'
+    sudo ufw allow 'OpenSSH'
+    sudo ufw delete allow 'Nginx HTTP'
+    sudo ufw --force enable
+
+}
+
+echo_section_header "Welcome to the SupportManager server setup script"
+
+git clone git@github.com:TomEasterbrook/support-manager-web.git
 
 echo "Welcome to the SupportManager the server setup script
 This script will install all the required dependencies for the SupportManager to run"
 
 read -p "Press enter to continue"
+
+
+
+
 
 sed -i "s/#\$nrconf{restart} = 'i';/\$nrconf{restart} = 'a';/" /etc/needrestart/needrestart.conf
 
@@ -47,8 +62,12 @@ echo_section_header "Installing Redis"
 sudo apt install redis-server -y
 
 echo_section_header "Configuring UFW"
-sudo ufw allow 'Nginx Full'
-sudo ufw allow 'OpenSSH'
-sudo ufw delete allow 'Nginx HTTP'
-sudo ufw enable
+setup_ufu
+
+echo_section_header "Cloning SupportManager"
+cd /var/www || exit
+
+git clone git@github.com:TomEasterbrook/support-manager-web.git
+git checkout develop
+
 
