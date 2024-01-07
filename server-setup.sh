@@ -46,4 +46,9 @@ sudo apt install mysql-server -y
 echo_section_header "Installing Redis"
 sudo apt install redis-server -y
 
+echo_section_header "Configuring UFW"
+sudo ufw allow 'Nginx Full'
+sudo ufw allow 'OpenSSH'
+sudo ufw delete allow 'Nginx HTTP'
+sudo ufw enable
 
