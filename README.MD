@@ -4,7 +4,7 @@ This repository contains the scripts used to manage a SupportManager server. The
 ## Installation
 To install the scripts, run the following command:
 ```bash 
-git clone TomEasterbrook/support-manager-Server-Scripts```
+git clone TomEasterbrook/support-manager-Server-Scripts
 ```
 You can then run the scripts using the following command:
 ```bash
