@@ -117,18 +117,15 @@ function install_app() {
         npm config set '//npm.fontawesome.com/:_authToken' "$fontAwesomeToken"
         npm install
         npm run build
+        composer dump-autoload -o
+
         if ! [ -d ~/cache ]; then
-            mkdir -p ~/cache
-            cp -r /var/www/"$domain"/vendor ~/cache/vendor
-            cp -r /var/www/"$domain"/node_modules ~/cache/node_modules
-            echo "Cache of dependencies created"
+                    mkdir -p ~/cache
+                    cp -r /var/www/"$domain"/vendor ~/cache/vendor
+                    cp -r /var/www/"$domain"/node_modules ~/cache/node_modules
+                    echo "Cache of dependencies created"
 
-        fi
-
-
-
-
-      composer dump-autoload -o
+                fi
       cd ~ || exit
 }
 cd ~ || exit
