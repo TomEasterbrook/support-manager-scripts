@@ -4,7 +4,7 @@ function echo_section_header() {
     echo "------------------------------------------------------------"
     echo "$1..."
     echo "------------------------------------------------------------"
-    sleep 3
+    sleep 1
 }
 
 
@@ -117,10 +117,14 @@ function install_app() {
         npm config set '//npm.fontawesome.com/:_authToken' "$fontAwesomeToken"
         npm install
         npm run build
-        mkdir -p ~/cache
-        cp -r /var/www/"$domain"/vendor ~/cache/vendor
-        cp -r /var/www/"$domain"/node_modules ~/cache/node_modules
-        echo "Cache of dependencies created"
+        if ! [ -d ~/cache ]; then
+            mkdir -p ~/cache
+            cp -r /var/www/"$domain"/vendor ~/cache/vendor
+            cp -r /var/www/"$domain"/node_modules ~/cache/node_modules
+            echo "Cache of dependencies created"
+
+        fi
+
 
 
 
