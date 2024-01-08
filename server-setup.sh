@@ -45,8 +45,8 @@ function install_packages() {
         echo_section_header "PHP already installed"
     fi
 
-    echo_section_header "Installing Composer"
     if ! [ -f /usr/local/bin/composer ]; then
+        echo_section_header "Installing Composer"
         curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
         else
         echo_section_header "Composer already installed"
@@ -61,7 +61,6 @@ function install_packages() {
         echo_section_header "NodeJS already installed"
     fi
 
-    echo_section_header "Installing Supervisor"
     if [ `command -v "supervisorctl"` ]; then
         echo_section_header "Supervisor already installed"
         else
@@ -91,7 +90,6 @@ function install_packages() {
         sudo apt install mysql-server -y
     fi
 
-    echo_section_header "Installing Redis"
     if [ `command -v "redis-server"` ]; then
         echo_section_header "Redis already installed"
         else
