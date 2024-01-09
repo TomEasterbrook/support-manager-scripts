@@ -133,6 +133,16 @@ function install_app() {
                 fi
       cd ~ || exit
 }
+
+function configure_nginx() {
+    echo_section_header "Configuring Web Server"
+    cp /~/support-manager-scripts/support/nginx.conf /etc/nginx/sites-available/"$domain".conf
+    sed -i "s/{{DOMAIN}}/$domain/g" /etc/nginx/sites-available/"$domain".conf
+    ln -s /etc/nginx/sites-available/"$domain".conf /etc/nginx/sites-enabled/
+    unlink /etc/nginx/sites-enabled/default
+    sudo systemctl restart nginx
+}
+
 cd ~ || exit
 echo_section_header "Welcome to the SupportManager server setup script"
 echo "Welcome to the SupportManager the server setup script
@@ -147,3 +157,4 @@ configure_git
 setup_ufu
 clone_repo
 install_app
+configure_nginx
