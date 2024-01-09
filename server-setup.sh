@@ -4,7 +4,6 @@ function echo_section_header() {
     echo "------------------------------------------------------------"
     echo "$1..."
     echo "------------------------------------------------------------"
-    sleep 1
 }
 
 
@@ -109,8 +108,11 @@ function install_app() {
       cd /var/www/"$domain"|| exit
       git checkout develop
       if [ -d ~/cache ]; then
+        echo_section_header "Restoring Composer dependencies from cache - this may take a while"
           cp -r ~/cache/vendor /var/www/"$domain"/vendor
+          echo_section_header "Restoring NPM from cache - this may take a while"
           cp -r ~/cache/node_modules /var/www/"$domain"/node_modules
+          echo "Cache restored"
           fi
         composer install --no-scripts
         npm config set "@fortawesome:registry" https://npm.fontawesome.com/
@@ -118,6 +120,8 @@ function install_app() {
         npm install
         npm run build
         composer dump-autoload -o
+        cp .env.example .env
+        php artisan key:generate
 
         if ! [ -d ~/cache ]; then
                     mkdir -p ~/cache
