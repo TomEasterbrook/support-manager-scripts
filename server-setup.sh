@@ -136,7 +136,7 @@ function install_app() {
 
 function configure_nginx() {
     echo_section_header "Configuring Web Server"
-    cp /~/support-manager-scripts/support/nginx.conf /etc/nginx/sites-available/"$domain".conf
+    cp ~/support-manager-scripts/support/nginx.conf /etc/nginx/sites-available/"$domain".conf
     sed -i "s/{{DOMAIN}}/$domain/g" /etc/nginx/sites-available/"$domain".conf
     ln -s /etc/nginx/sites-available/"$domain".conf /etc/nginx/sites-enabled/
     unlink /etc/nginx/sites-enabled/default
