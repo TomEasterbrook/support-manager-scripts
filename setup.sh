@@ -88,13 +88,16 @@ function configure_supervisor() {
     sudo supervisorctl start "$domain"
 }
 
+export -f echo_section_header
+
 echo_section_header "Welcome to the SupportManager server setup script"
 echo "Welcome to the SupportManager the server setup script
 This script will install all the required dependencies for the SupportManager to run"
 
 read -p "Press enter to continue"
 get_data
-sudo bash install-packages.sh
+sudo chmod +x install-packages.sh
+./install-packages.sh
 configure_git
 
 setup_ufu
