@@ -12,6 +12,10 @@ function get_data() {
     echo 'First we need to get some information about your environment'
     read -p 'What is your domain name? (e.g. example.com): ' domain
     read -p 'Please enter a FontAwesome Pro token: ' fontAwesomeToken
+    read -p 'Install MySQL? (y/n): ' mysql
+    read -p 'Install Redis? (y/n): ' redis
+
+    export mysql
     export domain
     export fontAwesomeToken
 
@@ -44,3 +48,10 @@ chmod +x install-app.sh
 
 sudo chmod +x configure-webserver.sh
 ./configure-webserver.sh
+
+if  [ "$mysql" = "y" ]; then
+  sudo chmod +x configure-database.sh
+  ./configure-database.sh
+fi
+
+

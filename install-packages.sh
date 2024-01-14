@@ -58,19 +58,22 @@ function install_webserver() {
 }
 
 function install_databases() {
+  if [ "$mysql" = "y" ]; then
       if ! [ `command -v "mysql"` ]; then
           echo_section_header "Installing MySQL"
           sudo apt install mysql-server -y
           else
           echo_section_header "MySQL already installed"
       fi
-
+  fi
+  if [ "$redis" = "y" ]; then
       if ! [ `command -v "redis-server"` ]; then
           echo_section_header "Installing Redis"
           sudo apt install redis-server -y
           else
           echo_section_header "Redis already installed"
       fi
+  fi
 
 }
 
