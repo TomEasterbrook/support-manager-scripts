@@ -84,3 +84,4 @@ function install_packages() {
     install_webserver
     install_databases
 }
+install_packages
